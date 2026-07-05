@@ -1,0 +1,9 @@
+{
+  "name": "Quazzy's Foodaria",
+  "short_name": "Foodaria",
+  "start_url": "./index.html",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#07040f",
+  "theme_color": "#ff2d8d"
+}
