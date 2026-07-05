@@ -1,0 +1,16 @@
+{
+  "name": "Quazzy's Foodaria",
+  "short_name": "Foodaria",
+  "description": "A fun, fast-paced restaurant cooking game — grill, fry, bake and blend your way to five stars!",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#14101a",
+  "theme_color": "#d83131",
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "assets/icons/icon-180.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

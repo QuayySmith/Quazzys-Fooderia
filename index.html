@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<title>Quazzy's Foodaria</title>
+<meta name="description" content="A fun, fast-paced restaurant cooking game — grill, fry, bake and blend your way to five stars!" />
+<meta name="theme-color" content="#14101a" />
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="assets/icons/favicon-32.png" />
+<link rel="apple-touch-icon" href="assets/icons/icon-180.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="mobile-web-app-capable" content="yes" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div id="app">
+
+  <!-- LOADING -->
+  <div id="screen-loading" class="screen">
+    <div class="loading-wrap">
+      <div class="logo-badge">
+        <div class="chef-hat-emoji">👨‍🍳</div>
+        <h1>QUAZZY'S<span>FOODARIA</span></h1>
+      </div>
+      <div class="loading-bar-track"><div id="loadingBarFill" class="loading-bar-fill"></div></div>
+      <p id="loadingLabel">Preheating the grill…</p>
+    </div>
+  </div>
+
+  <!-- MAIN MENU -->
+  <div id="screen-menu" class="screen hidden">
+    <div class="menu-bg-deco" aria-hidden="true"></div>
+    <div class="menu-panel">
+      <div class="logo-badge small">
+        <h1>QUAZZY'S<span>FOODARIA</span></h1>
+      </div>
+      <p class="tagline">Cook. Build. Serve. Satisfy.</p>
+      <div class="menu-buttons">
+        <button id="btnPlay" class="btn btn-primary btn-lg">▶ Play</button>
+        <button id="btnHowTo" class="btn btn-secondary">📖 How To Play</button>
+        <button id="btnAchievements" class="btn btn-secondary">🏆 Achievements</button>
+        <button id="btnSettings" class="btn btn-secondary">⚙ Settings</button>
+      </div>
+      <div class="menu-footer">
+        <span id="menuMoney">$0.00</span>
+        <span id="menuLevel">Level 1</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TUTORIAL OVERLAY -->
+  <div id="screen-tutorial" class="screen hidden overlay">
+    <div class="tutorial-card">
+      <h2 id="tutTitle">Welcome</h2>
+      <p id="tutText">...</p>
+      <div class="tutorial-dots" id="tutDots"></div>
+      <div class="tutorial-buttons">
+        <button id="btnTutSkip" class="btn btn-secondary">Skip</button>
+        <button id="btnTutNext" class="btn btn-primary">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACHIEVEMENTS -->
+  <div id="screen-achievements" class="screen hidden overlay">
+    <div class="panel-card">
+      <h2>🏆 Achievements</h2>
+      <div id="achievementsList" class="achievements-list"></div>
+      <button id="btnAchBack" class="btn btn-primary">Back</button>
+    </div>
+  </div>
+
+  <!-- GAME -->
+  <div id="screen-game" class="screen hidden">
+    <div id="hud">
+      <div class="hud-left">
+        <button id="btnPause" class="hud-icon-btn" aria-label="Pause">⏸</button>
+        <div class="hud-stat"><span class="hud-icon">💰</span><span id="hudMoney">$0.00</span></div>
+        <div class="hud-stat"><span class="hud-icon">⭐</span><span id="hudLevel">Lv 1</span></div>
+      </div>
+      <div class="hud-center">
+        <div class="xp-bar-track"><div id="xpBarFill" class="xp-bar-fill"></div></div>
+        <span id="hudDay">Day 1</span>
+      </div>
+      <div class="hud-right">
+        <div class="hud-stat"><span class="hud-icon">😀</span><span id="hudHappiness">100%</span></div>
+        <button id="btnGameSettings" class="hud-icon-btn" aria-label="Settings">⚙</button>
+      </div>
+    </div>
+
+    <div id="canvas-wrap">
+      <canvas id="lobbyCanvas"></canvas>
+      <canvas id="stationCanvas" class="hidden"></canvas>
+      <button id="backToLobbyBtn" class="btn btn-secondary hidden">‹ Back to Lobby</button>
+    </div>
+
+    <div id="ticketTray" aria-label="Order tickets"></div>
+  </div>
+
+  <!-- DAY SUMMARY -->
+  <div id="screen-daysummary" class="screen hidden overlay">
+    <div class="panel-card">
+      <h2>Day <span id="sumDay">1</span> Complete!</h2>
+      <div class="summary-stars" id="sumStars"></div>
+      <div class="summary-stats">
+        <p>Customers Served: <span id="sumServed">0</span></p>
+        <p>Money Earned: <span id="sumEarned">$0.00</span></p>
+        <p>XP Gained: <span id="sumXp">0</span></p>
+      </div>
+      <button id="btnNextDay" class="btn btn-primary btn-lg">Next Day ▶</button>
+    </div>
+  </div>
+
+  <!-- SETTINGS MODAL -->
+  <div id="modal-settings" class="modal hidden">
+    <div class="modal-card">
+      <h2>Settings</h2>
+      <div class="setting-row">
+        <span>Sound Effects</span>
+        <label class="switch"><input type="checkbox" id="toggleSfx" checked /><span class="slider"></span></label>
+      </div>
+      <div class="setting-row">
+        <span>Music</span>
+        <label class="switch"><input type="checkbox" id="toggleMusic" checked /><span class="slider"></span></label>
+      </div>
+      <div class="setting-row">
+        <button id="btnResetSave" class="btn btn-danger">Reset Progress</button>
+      </div>
+      <button id="btnCloseSettings" class="btn btn-primary">Close</button>
+    </div>
+  </div>
+
+  <!-- ROTATE DEVICE PROMPT -->
+  <div id="rotatePrompt" class="overlay hidden">
+    <div class="panel-card" style="text-align:center;">
+      <div style="font-size:48px;">📱↻</div>
+      <h2>Please Rotate Your Device</h2>
+      <p>Quazzy's Foodaria plays best in landscape mode.</p>
+    </div>
+  </div>
+
+  <div id="toast-layer"></div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/save.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/render.js"></script>
+<script src="js/orders.js"></script>
+<script src="js/stations/common.js"></script>
+<script src="js/stations/burger.js"></script>
+<script src="js/stations/fries.js"></script>
+<script src="js/stations/wings.js"></script>
+<script src="js/stations/pizza.js"></script>
+<script src="js/stations/milkshake.js"></script>
+<script src="js/lobby.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
